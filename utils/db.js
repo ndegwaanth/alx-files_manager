@@ -32,6 +32,7 @@ class DBClient {
   }
 
   // Get the number of users in the 'users' collection
+  // Get the number of users in the 'users' collection
   async nbUsers () {
     try {
       return await this.db.collection('users').countDocuments();

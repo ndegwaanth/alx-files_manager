@@ -1,4 +1,6 @@
-const sha1 = require('sha1');
+// controllers/UsersController.js
+
+const bcrypt = require('bcrypt');
 const dbClient = require('../utils/db');
 const { ObjectId } = require('mongodb');
 const redisClient = require('../utils/redis');
@@ -6,6 +8,7 @@ const redisClient = require('../utils/redis');
 class UsersController {
   static async postNew (req, res) {
     const { email, password } = req.body;
+    console.log('Received data:', { email, password });
 
     // Check if email is missing
     if (!email) {
@@ -20,11 +23,11 @@ class UsersController {
       // Check if the email already exists in the database
       const userExists = await dbClient.db.collection('users').findOne({ email });
       if (userExists) {
-        return res.status(400).json({ error: 'Already exist' });
+        return res.status(400).json({ error: 'Already exists' });
       }
 
-      // Hash the password using SHA1
-      const hashedPassword = sha1(password);
+      // Hash the password using bcrypt
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert the new user into the database
       const result = await dbClient.db.collection('users').insertOne({
@@ -56,7 +59,7 @@ class UsersController {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const user = await dbClient.usersCollection.findOne({ _id: new ObjectId(userId) });
+    const user = await dbClient.db.collection('users').findOne({ _id: new ObjectId(userId) });
 
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized' });
