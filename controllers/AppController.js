@@ -1,5 +1,5 @@
-import redisClient from '../utils/redis.js';
-import dbClient from '../utils/db.js';
+const redisClient = require('../utils/redis');
+const dbClient = require('../utils/db');
 
 class AppController {
   // GET /status
@@ -23,4 +23,4 @@ class AppController {
   }
 }
 
-export default AppController;
+module.exports = AppController;

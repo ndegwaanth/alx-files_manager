@@ -1,5 +1,4 @@
-import pkg from 'mongodb';
-const { MongoClient } = pkg;
+const { MongoClient } = require('mongodb');
 
 class DBClient {
   constructor () {
@@ -54,4 +53,4 @@ class DBClient {
 }
 
 const dbClient = new DBClient();
-export default dbClient;
+module.exports = dbClient;
