@@ -1,7 +1,7 @@
-const express = require('express');
-const AppController = require('../controllers/AppController');
-const UserController = require('../controllers/UserController');
-const AuthController = require('../controllers/AuthController');
+import express from 'express';
+import AppController from '../controllers/AppController.js';
+import UserController from '../controllers/UserController.js';
+import AuthController from '../controllers/AuthController.js';
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router.get('/connect', AuthController.getConnect);
 router.get('/disconnect', AuthController.getDisconnect);
 router.get('/users/me', UserController.getMe);
 
-module.exports = router;
+export default router;

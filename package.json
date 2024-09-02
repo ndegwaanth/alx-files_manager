@@ -1,6 +1,7 @@
 {
   "name": "files_manager",
   "version": "1.0.0",
+  "type": "module",
   "description": "This project is a summary of this back-end trimester: authentication, NodeJS, MongoDB, Redis, pagination and background processing",
   "main": "index.js",
   "scripts": {
@@ -16,6 +17,7 @@
   "dependencies": {
     "bull": "^3.16.0",
     "chai-http": "^4.3.0",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
     "image-thumbnail": "^1.0.10",
     "kue": "^0.11.6",
@@ -23,7 +25,6 @@
     "mongodb": "^3.5.9",
     "mongoose": "^8.6.0",
     "redis": "^2.8.0",
-    "sha1": "^1.1.1",
     "uuid": "^8.2.0"
   },
   "devDependencies": {
@@ -32,6 +33,9 @@
     "@babel/node": "^7.8.0",
     "@babel/preset-env": "^7.8.2",
     "@babel/register": "^7.8.0",
+    "@types/mongodb": "^4.0.6",
+    "@types/sha1": "^1.1.5",
+    "@types/uuid": "^10.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.4.0",
@@ -41,6 +45,7 @@
     "mocha": "^6.2.2",
     "nodemon": "^2.0.2",
     "request": "^2.88.0",
+    "sha1": "^1.1.1",
     "sinon": "^7.5.0"
   },
   "keywords": []
