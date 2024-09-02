@@ -1,7 +1,7 @@
 const redis = require('redis');
 
 class RedisClient {
-  constructor() {
+  constructor () {
     // Create a Redis client instance
     this.client = redis.createClient();
 
@@ -12,12 +12,12 @@ class RedisClient {
   }
 
   // Check if Redis connection is alive
-  isAlive() {
+  isAlive () {
     return this.client.connected;
   }
 
   // Get value from Redis by key
-  async get(key) {
+  async get (key) {
     return new Promise((resolve, reject) => {
       this.client.get(key, (err, value) => {
         if (err) return reject(err);
@@ -27,7 +27,7 @@ class RedisClient {
   }
 
   // Set value in Redis with an expiration time
-  async set(key, value, duration) {
+  async set (key, value, duration) {
     return new Promise((resolve, reject) => {
       this.client.set(key, value, 'EX', duration, (err, reply) => {
         if (err) return reject(err);
@@ -37,7 +37,7 @@ class RedisClient {
   }
 
   // Delete value from Redis by key
-  async del(key) {
+  async del (key) {
     return new Promise((resolve, reject) => {
       this.client.del(key, (err, reply) => {
         if (err) return reject(err);
@@ -45,7 +45,6 @@ class RedisClient {
       });
     });
   }
-
 }
 
 const redisClient = new RedisClient();
