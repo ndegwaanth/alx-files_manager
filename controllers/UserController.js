@@ -2,7 +2,6 @@ const sha1 = require('sha1');
 const dbClient = require('../utils/db');
 
 class UsersController {
-  // POST /users
   static async postNew (req, res) {
     const { email, password } = req.body;
 
@@ -17,7 +16,7 @@ class UsersController {
     }
 
     try {
-      // Check if the email already exists
+      // Check if the email already exists in the database
       const userExists = await dbClient.db.collection('users').findOne({ email });
       if (userExists) {
         return res.status(400).json({ error: 'Already exist' });
@@ -34,7 +33,7 @@ class UsersController {
 
       // Return the new user (only id and email)
       return res.status(201).json({
-        id: result.insertedId, // MongoDB will automatically generate this
+        id: result.insertedId,
         email
       });
     } catch (err) {

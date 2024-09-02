@@ -2,7 +2,6 @@ const express = require('express');
 const AppController = require('../controllers/AppController');
 const userController = require('../controllers/UserController');
 
-
 const router = express.Router();
 
 router.get('/status', AppController.getStatus);
