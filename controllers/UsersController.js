@@ -75,6 +75,43 @@ class UsersController {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
   }
+
+  static async getFile(req, res) {
+    const fileId = req.params.id;
+    const token = req.headers['x-token'];
+
+    // Find the file document by ID
+    const file = await dbClient.db.collection('files').findOne({ _id: ObjectId(fileId) });
+
+    if (!file) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    // Check if the file is a folder
+    if (file.type === 'folder') {
+      return res.status(400).json({ error: "A folder doesn't have content" });
+    }
+
+    // Check if the file is not public and if the user is authenticated
+    const userId = token ? await redisClient.get(`auth_${token}`) : null;
+    if (!file.isPublic && (!userId || String(userId) !== String(file.userId))) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    // Check if the file is locally present
+    const localPath = file.localPath;
+    if (!localPath || !fs.existsSync(localPath)) {
+      return res.status(404).json({ error: 'Not found' });
+    }
+
+    // Get the MIME type of the file
+    const mimeType = mime.lookup(file.name) || 'application/octet-stream';
+
+    // Return the content of the file
+    res.setHeader('Content-Type', mimeType);
+    const fileStream = fs.createReadStream(localPath);
+    fileStream.pipe(res);
+  }
 }
 
 module.exports = UsersController;
